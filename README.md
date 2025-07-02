@@ -157,6 +157,6 @@ http://localhost:8000/api/documentation
 
 ## Screenshots
  
-![home](https://raw.githubusercontent.com/georgesbrj/UniCampo/master/backend/public/images/home.png)
-![Documentação](https://raw.githubusercontent.com/georgesbrj/UniCampo/master/backend/public/images/documentation.png)
+![home](https://raw.githubusercontent.com/georgesbrj/Effecti/master/backend/public/images/home.png)
+![Documentação](https://raw.githubusercontent.com/georgesbrj/Effecti/master/backend/public/images/documentation.png)
  
