@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend_app_effecti 
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - app-network
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: effecti
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    command: bash -c "composer install && php artisan serve --host=0.0.0.0 --port=8000"
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db_effecti
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend_app_effecti
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # evita conflitos
+    networks:
+      - app-network
+    environment: 
+     - CHOKIDAR_USEPOLLING=true
+     - VITE_API_URL=http://localhost:8000/ 
+    command: npm run dev -- --host 0.0.0.0
+
+volumes:
+  dbdata:
+
+networks:
+  app-network:
+    driver: bridge

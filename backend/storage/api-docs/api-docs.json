@@ -1,0 +1,277 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Licitações",
+        "description": "API para gerenciamento de licitações",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/licitacoes": {
+            "get": {
+                "tags": [
+                    "Licitações"
+                ],
+                "summary": "Lista todas as licitações com possibilidade de filtro",
+                "operationId": "52e0bd7ee78f02b915da81871ff3109b",
+                "parameters": [
+                    {
+                        "name": "uasg_codigo",
+                        "in": "query",
+                        "description": "Código UASG para filtro",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "numero",
+                        "in": "query",
+                        "description": "Número da licitação para filtro",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Número da página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Quantidade de itens por página (máximo 100)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de licitações retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Licitacao"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 100
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro no servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro no servidor"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        },
+                                        "trace": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/licitacoes/{id}": {
+            "put": {
+                "tags": [
+                    "Licitações"
+                ],
+                "summary": "Atualiza a situação de uma licitação",
+                "operationId": "a93be3154c8c1a3bbc976a2af6a8ab43",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID da licitação",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "situacao"
+                                ],
+                                "properties": {
+                                    "situacao": {
+                                        "type": "string",
+                                        "example": "Cancelada"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Licitação atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Licitacao"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Licitação não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Licitação não encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Licitacao": {
+                "title": "Licitação",
+                "description": "Modelo de uma licitação",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "uasg_codigo": {
+                        "type": "string",
+                        "example": "123456"
+                    },
+                    "modalidade": {
+                        "type": "string",
+                        "example": "Concorrência"
+                    },
+                    "numero": {
+                        "type": "string",
+                        "example": "2023/001"
+                    },
+                    "situacao": {
+                        "type": "string",
+                        "example": "Aberta"
+                    },
+                    "data_abertura": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-07-01"
+                    },
+                    "endereco": {
+                        "type": "string",
+                        "example": "Rua Exemplo, 123"
+                    },
+                    "municipio": {
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "uf": {
+                        "type": "string",
+                        "example": "SP"
+                    },
+                    "objeto": {
+                        "type": "string",
+                        "example": "Aquisição de equipamentos"
+                    },
+                    "lei": {
+                        "type": "string",
+                        "example": "Lei 8.666/93"
+                    },
+                    "lida": {
+                        "type": "boolean",
+                        "example": false
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Licitações",
+            "description": "Consulta API licitações"
+        }
+    ]
+}
