@@ -1,6 +1,6 @@
 # Sistema de Licitações Públicas - Effecti 
 
-### Este projeto foi desenvolvido como parte do processo avaliativo para a vaga de Desenvolvedora Full Stack na Effecti.
+### Este projeto foi desenvolvido como parte do processo avaliativo para a vaga de Desenvolvedor Full Stack na Effecti.
 ### O sistema possui as seguintes funcionalidades principais:
 ### Listagem de dados: A partir de uma URL específica, os dados são coletados e processados.
 ### Armazenamento: As informações tratadas são salvas em um banco de dados.
